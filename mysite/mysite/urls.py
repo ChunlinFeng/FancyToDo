@@ -15,8 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from . import views
 
 urlpatterns = [
+    # for static html
+    path('', views.home, name='home'),
+    path('staticWeb/snake.html', views.staticWeb_snake),
+
     path('polls/', include('polls.urls')),
     path('admin/', admin.site.urls),
 ]

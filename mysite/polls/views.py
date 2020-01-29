@@ -6,7 +6,7 @@ from .models import Question, Choice
 
 # Create your views here.
 
-# the first layout of an index -> need RULconf to link 
+# the first layout of an index -> need URLconf to link 
 # index
 def index(request):
     latest_question_list = Question.objects.order_by('-pub_date')[:5]
