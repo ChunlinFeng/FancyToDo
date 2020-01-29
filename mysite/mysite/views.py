@@ -4,6 +4,10 @@ from django.urls import reverse
 
 # Create your views here.
 
+# todo:
+# 1. upload score to the server SQL
+# 2. add button to control the snake
+
 # the first layout of an index -> need URLconf to link 
 # index
 def home(request):

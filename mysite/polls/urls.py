@@ -3,6 +3,10 @@ from django.contrib import admin
 from django.urls import include, path
 from . import views
 
+# todo:
+# 1. add link back to mysite
+# 2. optimize the layout of each page
+# 3. admin page should have function to change choice
 app_name = 'polls'
 urlpatterns = [
     path('', views.index, name='index'),
