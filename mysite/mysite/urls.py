@@ -20,8 +20,7 @@ from . import views
 urlpatterns = [
     # for static html
     path('', views.home, name='home'),
-    path('staticWeb/snake.html', views.staticWeb_snake),
-
+    path('game_snake/', include('game_snake.urls')),
     path('polls/', include('polls.urls')),
     path('admin/', admin.site.urls),
 ]
