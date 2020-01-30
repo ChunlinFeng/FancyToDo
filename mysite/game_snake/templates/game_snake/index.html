@@ -1,0 +1,82 @@
+<!-- from https://github.com/kongchenglc/Demo/blob/master/snake.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FacyToDo -> Snake</title>
+    <style>
+        html, body {
+            /* display: flex; */
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            background-color: #333;
+            justify-content: center;
+            align-items: center;
+        }
+        h1, p, a{
+            align-items: center;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div style="background-color: antiquewhite; color: #333; padding: 20px;">
+        <p style="font-size: larger;"><a href="../">Click to go back.</a> </p>
+        
+    </div>
+    <div style="background-color: antiquewhite; padding: 3px;">
+        <p id="GameOver" style="font-size: larger; color: black;">Score</p>
+        <p style="font-size: larger; color: black;" id="Score">0</p>
+    </div>
+    <div>
+        <canvas id="can" width="400" height="400" style="margin:0 auto; background-color: black; display: block; text-align: center;">Sorry, your browser doesn't suppoort canvas.</canvas>
+    </div>
+    
+    <script>
+        var snake = [41, 40],       //snake body
+            direction = 1,          //1 -> Right, -1 Left, 20 Down, -20 Up
+            food = 43,              //food position
+            n,                      //the next position
+            score = -1,
+            box = document.getElementById('can').getContext('2d');
+            // 20px as a node, 0~399 maps the node in box[0-19][0-19]
+
+        function draw(seat, color) {
+            box.fillStyle = color;
+            box.fillRect(seat % 20 *20 + 1, ~~(seat / 20) * 20 + 1, 18, 18);
+            //fill a rectangle with color，the parameter is x, y, width, height
+        }
+
+        document.onkeydown = function(evt) {    //change direction by up/down/left/right on keyboard
+            direction = snake[1] - snake[0] == (n = [-1, -20, 1, 20][(evt || event).keyCode - 37] || direction) ? direction : n;
+            console.log([-1, -20, 1, 20][(evt || event).keyCode - 37]);
+        };
+
+        !function() {
+            snake.unshift(n = snake[0] + direction);    // the n here is the position of next snake head
+            if(snake.indexOf(n, 1) > 0 || n < 0 || n > 399 || direction == 1 && n % 20 == 0 || direction == -1 && n % 20 == 19) {
+                //if judge game is over
+                document.getElementById("GameOver").style.color = "red";
+                document.getElementById("GameOver").innerHTML = "Game Over!"
+                // return alert("GAME OVER!");
+                return;
+            }
+            draw(n, "lime");                //draw the position of next snake head
+            if(n == food) {                 //if one food is eaten, generate another one
+                score = score + 1
+                document.getElementById("Score").innerHTML = String(score)
+                while (snake.indexOf(food = ~~(Math.random() * 400)) > 0);
+                draw(food, "yellow");
+            } else {                        //if no food is eating
+                draw(snake.pop(),"black");
+            }
+            setTimeout(arguments.callee, 300);      // the velocity of snake
+        }();
+    </script>
+    <div style="background-color: antiquewhite; padding: 10px;"><p style="font-size: larger;">Code from <a href="https://github.com/kongchenglc/Demo/blob/master/snake.html"  target="_blank">github.com/kongchenglc/</a></p></div>
+    
+</body>
+
+
+</html>
