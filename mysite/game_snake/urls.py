@@ -7,6 +7,6 @@ from . import views
 app_name = 'game_snake'
 urlpatterns = [
     path('', views.index, name='index'),
-    path('raning_upload', views.ranking_upload, name='ranking_upload'),
+    path('ranking_upload', views.ranking_upload, name='ranking_upload'),
     
 ]

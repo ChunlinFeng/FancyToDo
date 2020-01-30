@@ -5,7 +5,7 @@ from django.utils import timezone
 
 # Create your models here.
 class Ranking_Record(models.Model):
-    player_name = models.CharField(max_length= 8)
+    player_name = models.CharField(max_length= 15)
     score = models.IntegerField(default=0)
     date = models.DateTimeField('record date')
 

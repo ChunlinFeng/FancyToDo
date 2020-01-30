@@ -26,6 +26,7 @@
         
     </div>
     <div style="background-color: antiquewhite; padding: 3px;">
+        {% if message %} <p><strong>{{ message }}</strong></p> {% endif %}
         <p id="GameOver" style="font-size: larger; color: black;">Score</p>
         <p style="font-size: larger; color: black;" id="Score">0</p>
     </div>
@@ -58,7 +59,10 @@
             if(snake.indexOf(n, 1) > 0 || n < 0 || n > 399 || direction == 1 && n % 20 == 0 || direction == -1 && n % 20 == 19) {
                 //if judge game is over
                 document.getElementById("GameOver").style.color = "red";
-                document.getElementById("GameOver").innerHTML = "Game Over!"
+                document.getElementById("GameOver").innerHTML = "Game Over!";
+                document.getElementById('light').style.display='block';
+                document.getElementById('fade').style.display='block'
+                document.getElementById('upload_score').value=score;
                 // return alert("GAME OVER!");
                 return;
             }
@@ -74,7 +78,71 @@
             setTimeout(arguments.callee, 300);      // the velocity of snake
         }();
     </script>
-    <div style="background-color: antiquewhite; padding: 10px;"><p style="font-size: larger;">Code from <a href="https://github.com/kongchenglc/Demo/blob/master/snake.html"  target="_blank">github.com/kongchenglc/</a></p></div>
+
+    <div style="background-color: antiquewhite; padding: 10px;">
+        <p style="font-size: larger; color: black;">Ranking</p>
+        {% if ranking_list %}
+            <ul>
+                {% for ranking_info in ranking_list %}
+                    <li style="justify-content: center;display: flex;"> {{ranking_info}}
+                    </li><br>
+                {% endfor %}
+            </ul>
+            {% else %}
+                <p> No polls are available. </p>
+        {% endif %}
+    </div>
+
+
+    <style> 
+        .black_overlay{ 
+            display: none; 
+            position: absolute; 
+            top: 0%; 
+            left: 0%; 
+            width: 100%; 
+            height: 100%; 
+            background-color: black; 
+            z-index:1001; 
+            -moz-opacity: 0.8; 
+            opacity:.80; 
+            filter: alpha(opacity=88); 
+        } 
+        .white_content { 
+            display: none; 
+            position: absolute; 
+            top: 25%; 
+            left: 25%; 
+            width: 55%; 
+            height: 55%; 
+            padding: 20px; 
+            border: 5px solid #ff4c00; 
+            background-color: white; 
+            z-index:1002; 
+            overflow: auto; 
+        } 
+    </style> 
+    
+    <div id="light" class="white_content">
+
+    <p style="font-size: larger; color: black;">Type your name to get a rank?</p>
+    <form action = "{% url 'game_snake:ranking_upload' %}" method="post"> 
+        {% csrf_token %}
+            Name:<br>
+            <input type="text" name="player_name" value="new_player"><br>
+            Score:<br>
+            <input id ='upload_score' type="number" name="score" readonly='readonly' value = 0>
+        <br>
+    <input type="submit" value="submit">
+    </form>
+    
+    <br>
+    <a href = "">Another Round?</a></div> 
+    
+    <div id="fade" class="black_overlay"></div> 
+
+
+    <div style="background-color: aliceblue; padding: 10px;"><p style="font-size: medium;">Js Code from <a href="https://github.com/kongchenglc/Demo/blob/master/snake.html"  target="_blank">github.com/kongchenglc/</a></p></div>
     
 </body>
 
